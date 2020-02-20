@@ -1,26 +1,80 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import styles from "./App.module.scss";
+import Calendar from "./Components/Calendar/Calendar.component";
+import { connect } from "react-redux";
+import { openModal, closeModal } from "./Redux/actionCreator";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App({ showModal, setCloseModal, setOpenModal }) {
+  const [allMonths, setAllMonths] = useState({});
+  useEffect(() => {
+    // gets current month number(0 based)
+    setAllMonths(getDaysInMonths());
+  }, []);
+  console.log(showModal);
+  // creates a 2 index array(number of month & days in that month) that for each month
+  const getDaysInMonths = () => {
+    let months = {
+      January: [1],
+      February: [2],
+      March: [3],
+      April: [4],
+      May: [5],
+      June: [6],
+      July: [7],
+      August: [8],
+      September: [9],
+      October: [10],
+      November: [11],
+      December: [12]
+    };
+
+    // get current year
+    const currentDate = new Date().getFullYear();
+    // loop through all months and add length in days to the object
+    for (let month in months) {
+      const daysInMonth = new Date(currentDate, months[month], 0).getDate();
+      const monthNumber = months[month][0];
+      months[month] = [monthNumber, daysInMonth];
+    }
+    return months;
+  };
+
+  let calendars = [];
+  // loop through all months and create a calendar for each month
+  if (allMonths) {
+    for (let month in allMonths) {
+      const [monthIndex, daysInMonth] = allMonths[month];
+      const getMonth = new Date().getMonth() + 1;
+      calendars.push(
+        <Calendar
+          key={monthIndex}
+          name={`${month}`}
+          daysInMonth={daysInMonth}
+          isCurrentMonth={monthIndex === getMonth}
+          setModal={() => setToggleModal("open")}
+        />
+      );
+    }
+  }
+
+  const setToggleModal = status => {
+    if (status === "open") {
+      setOpenModal();
+    } else {
+      setCloseModal();
+    }
+    console.log("here");
+  };
+
+  return <div className={styles.app}>{calendars}</div>;
 }
-
-export default App;
+const mapStateToProps = state => {
+  return state;
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setOpenModal: () => dispatch(openModal()),
+    setCloseModal: () => dispatch(closeModal())
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(App);

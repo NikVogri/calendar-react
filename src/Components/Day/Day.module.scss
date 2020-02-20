@@ -1,0 +1,30 @@
+.day {
+  //   border: solid 1px red;
+  width: 30px;
+  height: 30px;
+  margin: 3px;
+  display: flex;
+  border-radius: 50px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  border: solid 1px transparent;
+  position: relative;
+  // border-bottom: solid 1px #ccc;
+  .note {
+    position: absolute;
+    background: red;
+    border-radius: 50px;
+    height: 5px;
+    width: 5px;
+    right: 3px;
+    top: 3px;
+    z-index: 999;
+  }
+  &:hover {
+    background: rgba(44, 130, 201, 1);
+    color: #fff;
+    cursor: pointer;
+  }
+}
