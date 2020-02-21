@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./App.module.scss";
 import Calendar from "./Components/Calendar/Calendar.component";
+import Modal from "./Components/Modal/Modal.component";
 import { connect } from "react-redux";
-import { openModal, closeModal } from "./Redux/actionCreator";
+import { closeModal } from "./Redux/actionCreator";
 
 function App({ showModal, setCloseModal, setOpenModal }) {
   const [allMonths, setAllMonths] = useState({});
@@ -10,7 +11,7 @@ function App({ showModal, setCloseModal, setOpenModal }) {
     // gets current month number(0 based)
     setAllMonths(getDaysInMonths());
   }, []);
-  console.log(showModal);
+
   // creates a 2 index array(number of month & days in that month) that for each month
   const getDaysInMonths = () => {
     let months = {
@@ -51,29 +52,23 @@ function App({ showModal, setCloseModal, setOpenModal }) {
           name={`${month}`}
           daysInMonth={daysInMonth}
           isCurrentMonth={monthIndex === getMonth}
-          setModal={() => setToggleModal("open")}
         />
       );
     }
   }
 
-  const setToggleModal = status => {
-    if (status === "open") {
-      setOpenModal();
-    } else {
-      setCloseModal();
-    }
-    console.log("here");
-  };
-
-  return <div className={styles.app}>{calendars}</div>;
+  return (
+    <div className={styles.app}>
+      <Modal show={showModal} closeModal={() => setCloseModal()} />
+      {calendars}
+    </div>
+  );
 }
 const mapStateToProps = state => {
   return state;
 };
 const mapDispatchToProps = dispatch => {
   return {
-    setOpenModal: () => dispatch(openModal()),
     setCloseModal: () => dispatch(closeModal())
   };
 };
