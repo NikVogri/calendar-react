@@ -4,13 +4,18 @@ import Day from "../Day/Day.component";
 import { connect } from "react-redux";
 import { openModal, closeModal } from "../../Redux/actionCreator";
 
-const Calendar = ({ name, daysInMonth, isCurrentMonth, setOpenModal }) => {
+const Calendar = ({
+  name,
+  daysInMonth,
+  isCurrentMonth,
+  setOpenModal,
+  hasNotes
+}) => {
   let daysArr = [];
-
   const modalOpen = (day, month) => {
     const date = [day, month];
-    // send date and notes to modal
-    setOpenModal(date, null);
+    // send date to modal
+    setOpenModal(date);
   };
 
   if (daysInMonth) {
@@ -21,6 +26,7 @@ const Calendar = ({ name, daysInMonth, isCurrentMonth, setOpenModal }) => {
           dayNumber={i}
           currentMonth={name}
           openModal={(date, month) => modalOpen(date, month)}
+          hasNotes={hasNotes[name].length >= 1 ? hasNotes[name] : null}
           // setNote={(day, month) => setNote(day, month)}
         />
       );
@@ -41,9 +47,13 @@ const Calendar = ({ name, daysInMonth, isCurrentMonth, setOpenModal }) => {
 };
 const mapDispatchToProps = dispatch => {
   return {
-    setOpenModal: (date, notes) => dispatch(openModal(date, notes)),
+    setOpenModal: date => dispatch(openModal(date)),
     setCloseModal: () => dispatch(closeModal())
   };
 };
-
-export default connect(null, mapDispatchToProps)(Calendar);
+const mapStateToProps = state => {
+  return {
+    hasNotes: state.modalInformation
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);

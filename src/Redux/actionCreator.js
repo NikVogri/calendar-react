@@ -1,6 +1,6 @@
 import * as type from "./actionTypes";
 
-export const openModal = (date, notes) => {
+export const openModal = date => {
   let [day, month] = date;
   // convert day into correct suffix
   switch (parseInt(day)) {
@@ -32,7 +32,7 @@ export const openModal = (date, notes) => {
       break;
   }
   const newDate = [day, month];
-  return { type: type.OPEN_MODAL, payload: { displayDate: newDate, notes } };
+  return { type: type.OPEN_MODAL, payload: { displayDate: newDate } };
 };
 export const closeModal = () => {
   return { type: type.CLOSE_MODAL };

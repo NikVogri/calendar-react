@@ -2,13 +2,13 @@
   position: absolute;
   height: 350px;
   width: 300px;
-  z-index: 99;
-  top: 75%;
+  z-index: 999;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
   padding: 1.3rem;
-  transition: opacity 5s ease;
+  transition: all 0.3s ease-in;
   //   border: solid 3px rgba(44, 130, 201, 0.4);
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
   border-radius: 15px;
@@ -115,14 +115,12 @@
   }
 }
 .showModal {
-  transition: opacity 5s ease;
-  display: block;
+  // display: block;
   opacity: 1 !important;
-  top: 50%;
+  left: 50%;
 }
 .hideModal {
-  transition: opacity 5s ease;
-  display: none !important;
+  // display: none !important;
   opacity: 0;
-  top: 25%;
+  left: 75%;
 }

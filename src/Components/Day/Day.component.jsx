@@ -1,12 +1,15 @@
 import React from "react";
 import styles from "./Day.module.scss";
 
-const Day = ({ dayNumber, currentMonth, openModal }) => {
-  //  const [notification, setNotification] = useState(false);
-
-  // const setNotifiction = (month, day) => {
-  //   showModal()
-  // };
+const Day = ({ dayNumber, currentMonth, openModal, hasNotes }) => {
+  let showNotification = false;
+  const checkHasNotes = () => {
+    hasNotes.forEach(el => {
+      if (parseInt(el.day) === parseInt(dayNumber)) {
+        showNotification = true;
+      }
+    });
+  };
 
   //get current day (to display current day)
   const currentDay = new Date().getDate();
@@ -27,7 +30,9 @@ const Day = ({ dayNumber, currentMonth, openModal }) => {
     "November",
     "December"
   ];
-
+  if (hasNotes) {
+    checkHasNotes();
+  }
   return (
     <div
       className={`${styles.day} ${
@@ -36,11 +41,11 @@ const Day = ({ dayNumber, currentMonth, openModal }) => {
           : null
       }`}
       onClick={e => {
-        openModal(e.target.innerHTML, currentMonth);
+        openModal(dayNumber, currentMonth);
       }}
     >
-      {/* <div className={styles.note}></div> */}
       {dayNumber}
+      {showNotification ? <div className={styles.note}></div> : null}
     </div>
   );
 };
