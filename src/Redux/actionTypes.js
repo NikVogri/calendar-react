@@ -1,3 +1,4 @@
 export const OPEN_MODAL = "OPEN_MODAL";
 export const CLOSE_MODAL = "CLOSE_MODAL";
-export const ADD_NOTES_TO_DATE = "ADD_NOTES_TO_DATE";
+export const ADD_NOTE_TO_DATE = "ADD_NOTE_TO_DATE";
+export const REMOVE_NOTE_FROM_STATE = "REMOVE_NOTE_FROM_STATE";

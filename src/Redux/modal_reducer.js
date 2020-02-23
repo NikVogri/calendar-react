@@ -1,4 +1,5 @@
-import { OPEN_MODAL, CLOSE_MODAL, ADD_NOTES_TO_DATE } from "./actionTypes";
+import * as type from "./actionTypes";
+
 const initialState = {
   modalInformation: {
     displayDate: "",
@@ -22,7 +23,7 @@ const showModalReducer = (state = initialState, action) => {
   console.log(action);
   console.log(state);
   switch (action.type) {
-    case OPEN_MODAL:
+    case type.OPEN_MODAL:
       return {
         ...state,
         showModal: true,
@@ -31,12 +32,12 @@ const showModalReducer = (state = initialState, action) => {
           displayDate: action.payload.displayDate
         }
       };
-    case CLOSE_MODAL:
+    case type.CLOSE_MODAL:
       return {
         ...state,
         showModal: false
       };
-    case ADD_NOTES_TO_DATE:
+    case type.ADD_NOTE_TO_DATE:
       return {
         ...state,
         modalInformation: {
@@ -45,6 +46,22 @@ const showModalReducer = (state = initialState, action) => {
             ...state.modalInformation[action.payload.month],
             { day: action.payload.data.day, note: action.payload.data.note }
           ]
+        }
+      };
+    case type.REMOVE_NOTE_FROM_STATE:
+      return {
+        ...state,
+        modalInformation: {
+          ...state.modalInformation,
+          [action.payload.date[1]]: state.modalInformation[
+            action.payload.date[1]
+          ].filter(note => {
+            // check if provided date is the same as date in state, if it is then filter over element else dont
+            if (action.payload.date[0] === note.day) {
+              // if it is check if notes are not equal, if they are not then save them to state.
+              return action.payload.note !== note.note;
+            } else return true;
+          })
         }
       };
     default:

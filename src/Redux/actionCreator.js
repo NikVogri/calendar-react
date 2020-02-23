@@ -42,7 +42,7 @@ export const closeModal = () => {
 export const addNotesToState = (day, month, note) => {
   console.log(day, month, note);
   return {
-    type: type.ADD_NOTES_TO_DATE,
+    type: type.ADD_NOTE_TO_DATE,
     payload: {
       month,
       data: {
@@ -50,5 +50,13 @@ export const addNotesToState = (day, month, note) => {
         note
       }
     }
+  };
+};
+
+export const removeNoteFromState = (note, date) => {
+  console.log(note);
+  return {
+    type: type.REMOVE_NOTE_FROM_STATE,
+    payload: { note, date }
   };
 };

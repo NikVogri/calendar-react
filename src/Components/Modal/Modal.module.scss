@@ -113,14 +113,55 @@
     transform: translate(-50%, -50%);
     font-size: 0.75rem;
   }
+  .error {
+    color: #fff;
+    background: rgba(44, 130, 201, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+    display: block;
+    width: 200px;
+    position: absolute;
+    bottom: 35px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease-in-out;
+  }
+  .showError {
+    animation: displayErrorMessage 0.4s ease-in;
+    opacity: 1 !important;
+    bottom: 35px;
+    pointer-events: all;
+  }
+  .hideError {
+    pointer-events: none;
+    opacity: 0;
+    bottom: -60px;
+  }
+}
+
+@keyframes displayErrorMessage {
+  0% {
+    bottom: -10px;
+    opacity: 0;
+  }
+  50% {
+    bottom: 50px;
+    opacity: 0.5;
+  }
+  100% {
+    bottom: 35px;
+    opacity: 1;
+  }
 }
 .showModal {
   // display: block;
   opacity: 1 !important;
   left: 50%;
+  pointer-events: all;
 }
 .hideModal {
   // display: none !important;
+  pointer-events: none;
   opacity: 0;
   left: 75%;
 }
