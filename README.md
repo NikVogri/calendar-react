@@ -1,68 +1,20 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# React Calendar Application!
 
-## Available Scripts
 
-In the project directory, you can run:
+## About
 
-### `yarn start`
+The calendar application is built using react, redux & redux-persist. In the future I am going to move storage to a database instead of local storage with redux-persist.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How it works
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Application shows each month and days in that month in the current year. The current month and day have red color, so we can easily see which day and month it is currently. Of course this updates every day when the application is loaded. 
 
-### `yarn test`
+You can click on any day and add notes for that day, like doctors apointment, or a very important test. You can add up to 5 notes for each day. You can also remove notes and add other new ones on the fly. If there is a note on a specific day, that day has a little notifier, so you know there are notes on that day.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Future improvements
 
-### `yarn build`
+Currently the application is totally usable, and I encourage you to try it and criticize it if you find something that you would've done better, or if you find any bugs.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+a) As stated above, I would like to move the redux store to a database and create users & authentication, so the state will be available on every device after you log into your account.
+b) I would also like to optimize the app for mobile users. 
+c) Lastly, I would also like to implement history and future, so you can set a notification for years ahead or check past notifications.
