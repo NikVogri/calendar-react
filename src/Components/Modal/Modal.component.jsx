@@ -83,7 +83,6 @@ const Modal = ({
       return 0;
     }
   };
-
   return (
     <div
       className={`${classes.modal} ${

@@ -6,12 +6,24 @@ import * as serviceWorker from "./serviceWorker";
 import { createStore } from "redux";
 import modal_reducer from "./Redux/modal_reducer";
 import { Provider } from "react-redux";
+import storage from "redux-persist/lib/storage";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
-const store = createStore(modal_reducer);
+const persistConfig = {
+  key: "root",
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, modal_reducer);
+const store = createStore(persistedReducer);
+let persistedStore = persistStore(store);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={<h1>loading</h1>} persistor={persistedStore}>
+      <App />
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );

@@ -31,7 +31,8 @@ const showModalReducer = (state = initialState, action) => {
         modalInformation: {
           ...state.modalInformation,
           displayDate: action.payload.displayDate
-        }
+        },
+        showError: ""
       };
     case type.CLOSE_MODAL:
       return {
