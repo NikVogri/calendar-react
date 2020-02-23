@@ -1,0 +1,50 @@
+.error {
+  color: #fff;
+  background: rgba(44, 130, 201, 0.5);
+  padding: 5px;
+  border-radius: 5px;
+  display: block;
+  min-width: 180px;
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+.showError {
+  animation: displayErrorMessage 0.4s ease-in;
+  opacity: 1 !important;
+  bottom: 35px;
+  pointer-events: all;
+}
+.hideError {
+  animation: hideErrorMessage 0.01s ease-in-out;
+  pointer-events: none;
+  opacity: 0;
+  bottom: 5px;
+}
+
+@keyframes displayErrorMessage {
+  0% {
+    bottom: 5px;
+    opacity: 0;
+  }
+  50% {
+    bottom: 50px;
+    opacity: 0.5;
+  }
+  100% {
+    bottom: 35px;
+    opacity: 1;
+  }
+}
+@keyframes hideErrorMessage {
+  0% {
+    opacity: 1;
+    bottom: 35px;
+  }
+  100% {
+    opacity: 0;
+    bottom: 5px;
+  }
+}

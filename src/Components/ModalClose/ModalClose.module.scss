@@ -1,0 +1,14 @@
+.closeModal {
+  font-size: 0.9rem;
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  transform: translate(-50%, -50%);
+  color: #ccc;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.1s ease-in-out;
+  &:hover {
+    color: #000;
+  }
+}

@@ -16,7 +16,8 @@ const initialState = {
     November: [],
     December: []
   },
-  showModal: false
+  showModal: false,
+  showError: ""
 };
 
 const showModalReducer = (state = initialState, action) => {
@@ -63,6 +64,16 @@ const showModalReducer = (state = initialState, action) => {
             } else return true;
           })
         }
+      };
+    case type.ADD_ERROR_TO_MODAL:
+      return {
+        ...state,
+        showError: action.payload
+      };
+    case type.REMOVE_ERROR_FROM_MODAL:
+      return {
+        ...state,
+        showError: ""
       };
     default:
       return state;

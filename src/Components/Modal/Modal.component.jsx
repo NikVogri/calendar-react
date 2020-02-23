@@ -3,31 +3,54 @@ import classes from "./Modal.module.scss";
 import { connect } from "react-redux";
 import {
   addNotesToState,
-  removeNoteFromState
+  removeNoteFromState,
+  addErrorToState,
+  removeErrorFromState
 } from "../../Redux/actionCreator";
-const Modal = ({ show, closeModal, date, setNotes, notes, removeNote }) => {
+import ModalError from "../ModalError/ModalError.component";
+import ModalDate from "../ModalDate/ModalDate.component";
+import ModalNotesList from "../ModalNoteList/ModalNoteList.component";
+import ModalClose from "../ModalClose/ModalClose.component";
+import ModalListLength from "../ModalListLength/ModalListLength.component";
+
+const Modal = ({
+  show,
+  closeModal,
+  date,
+  setNotes,
+  notes,
+  removeNote,
+  setError,
+  removeError,
+  error
+}) => {
   const [input, setInput] = useState("");
-  const [alreadyOnList, setAlreadyOnList] = useState(false);
-  const [noteIsNotEmpty, setNoteIsNotEmpty] = useState(false);
   const [day, month] = date;
 
-  const closeErrorMessage = type => {
+  const setCloseModal = () => {
+    // when user clicks close modal execute this
+    removeError();
+    setInput("");
+    closeModal();
+  };
+
+  const setErrorMessage = type => {
+    // check what type of error to display
     if (type === "duplicate") {
-      setAlreadyOnList(false);
+      setError("Note already exists");
     } else if (type === "empty") {
-      setNoteIsNotEmpty(false);
+      setError("Note can't be empty");
     }
   };
 
-  closeErrorMessage();
   const addNotesToMonth = () => {
     console.log("i ran");
     // checks if theres more than one note already in state
     if (input === "") {
-      setNoteIsNotEmpty(true);
+      setErrorMessage("empty");
       return;
     } else {
-      setNoteIsNotEmpty(false);
+      removeError();
     }
     if (notes[month].length >= 1) {
       if (
@@ -35,12 +58,12 @@ const Modal = ({ show, closeModal, date, setNotes, notes, removeNote }) => {
         0
       ) {
         // not a duplicate
-        setAlreadyOnList(false);
+        removeError();
         setNotes(day, month, input);
         setInput("");
       } else {
         // then its a duplicate
-        setAlreadyOnList(true);
+        setErrorMessage("duplicate");
       }
     } else {
       // this is for adding the first item to an empty array
@@ -49,78 +72,49 @@ const Modal = ({ show, closeModal, date, setNotes, notes, removeNote }) => {
     }
   };
   // this variable is for the counter - to display number of notes & check if it's over 5.
-  let notesLength;
   const displayNotes = () => {
     if (month) {
       const allNotes = notes;
       const currentMonthNotes = allNotes[month];
       // loops over month notes arr and returns arr with all days that contain notes
       const notesArr = currentMonthNotes.filter(note => note.day === day);
-      notesLength = notesArr.length;
       return notesArr;
+    } else {
+      return 0;
     }
   };
+
   return (
     <div
       className={`${classes.modal} ${
         show ? classes.showModal : classes.hideModal
       }`}
     >
-      <span className={classes.closeModal} onClick={closeModal} title="Close">
-        X
-      </span>
-      <span className={classes.dateName}>
-        {date[0]} {date[1]}
-      </span>
-      <ul className={classes.listEvents}>
-        {month
-          ? displayNotes().map((item, index) => (
-              <li key={index}>
-                <span
-                  className={classes.removeItem}
-                  onClick={() => removeNote(item.note, date)}
-                >
-                  X{" "}
-                </span>
-                <span className={classes.itemValue}>{item.note}</span>
-              </li>
-            ))
-          : null}
-      </ul>
+      <ModalClose closeModal={() => setCloseModal()} />
+      <ModalDate day={date[0]} month={date[1]} />
+      <ModalNotesList
+        date={date}
+        showNotes={() => displayNotes()}
+        removeNote={removeNote}
+      />
 
-      {month ? (
-        notesLength >= 5 ? null : (
-          <div className={classes.addItems}>
-            <span
-              className={classes.addEventButton}
-              title="Add an event"
-              onClick={() => addNotesToMonth()}
-            >
-              +
-            </span>
-            <input
-              onChange={e => setInput(e.target.value)}
-              maxLength="65"
-              value={input}
-            />
-          </div>
-        )
-      ) : null}
-      <span
-        className={`${classes.error} ${
-          alreadyOnList ? classes.showError : classes.hideError
-        }`}
-      >
-        Note already exists
-      </span>
-      <span
-        className={`${classes.error} ${
-          noteIsNotEmpty ? classes.showError : classes.hideError
-        }`}
-      >
-        Note can't be empty
-      </span>
-      <span className={classes.amount}>{month ? notesLength : "0"}/5</span>
+      <div className={classes.addItems}>
+        <span
+          className={classes.addEventButton}
+          title="Add an event"
+          onClick={() => addNotesToMonth()}
+        >
+          +
+        </span>
+        <input
+          onChange={e => setInput(e.target.value)}
+          maxLength="65"
+          value={input}
+        />
+      </div>
+
+      {error ? <ModalError error={error} closeError={removeError} /> : null}
+      <ModalListLength length={displayNotes().length} />
     </div>
   );
 };
@@ -128,13 +122,16 @@ const Modal = ({ show, closeModal, date, setNotes, notes, removeNote }) => {
 const mapStateToProps = state => {
   return {
     date: state.modalInformation.displayDate,
-    notes: state.modalInformation
+    notes: state.modalInformation,
+    error: state.showError
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     setNotes: (day, month, note) => dispatch(addNotesToState(day, month, note)),
-    removeNote: (note, month) => dispatch(removeNoteFromState(note, month))
+    removeNote: (note, month) => dispatch(removeNoteFromState(note, month)),
+    setError: error => dispatch(addErrorToState(error)),
+    removeError: () => dispatch(removeErrorFromState())
   };
 };
 

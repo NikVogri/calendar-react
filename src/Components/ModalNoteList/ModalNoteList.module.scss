@@ -1,0 +1,29 @@
+.listEvents {
+  padding: 0;
+  list-style: none;
+
+  .removeItem {
+    opacity: 0;
+    padding: 3px 5px;
+    margin: 0 5px;
+    font-size: 0.7rem;
+    cursor: pointer;
+    font-weight: 800;
+    // border: solid 1px #fff;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  li {
+    padding: 0.5rem 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease-in;
+    &:hover .removeItem {
+      opacity: 1;
+    }
+    &:hover {
+      background: rgba(44, 130, 201, 1);
+      color: #fff;
+    }
+  }
+}

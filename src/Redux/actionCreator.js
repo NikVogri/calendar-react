@@ -54,9 +54,22 @@ export const addNotesToState = (day, month, note) => {
 };
 
 export const removeNoteFromState = (note, date) => {
-  console.log(note);
   return {
     type: type.REMOVE_NOTE_FROM_STATE,
     payload: { note, date }
+  };
+};
+
+export const addErrorToState = error => {
+  console.log("from: add error to state", error);
+  return {
+    type: type.ADD_ERROR_TO_MODAL,
+    payload: error
+  };
+};
+export const removeErrorFromState = () => {
+  console.log("from: remove error from state");
+  return {
+    type: type.ADD_ERROR_TO_MODAL
   };
 };
