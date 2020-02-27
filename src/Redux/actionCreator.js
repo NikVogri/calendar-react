@@ -40,7 +40,6 @@ export const closeModal = () => {
 
 // add notes to state
 export const addNotesToState = (day, month, note) => {
-  console.log(day, month, note);
   return {
     type: type.ADD_NOTE_TO_DATE,
     payload: {
@@ -61,14 +60,12 @@ export const removeNoteFromState = (note, date) => {
 };
 
 export const addErrorToState = error => {
-  console.log("from: add error to state", error);
   return {
     type: type.ADD_ERROR_TO_MODAL,
     payload: error
   };
 };
 export const removeErrorFromState = () => {
-  console.log("from: remove error from state");
   return {
     type: type.ADD_ERROR_TO_MODAL
   };

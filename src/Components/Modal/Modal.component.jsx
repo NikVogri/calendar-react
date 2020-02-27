@@ -44,7 +44,6 @@ const Modal = ({
   };
 
   const addNotesToMonth = () => {
-    console.log("i ran");
     // checks if theres more than one note already in state
     if (input === "") {
       setErrorMessage("empty");
