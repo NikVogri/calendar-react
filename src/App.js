@@ -59,7 +59,7 @@ function App({ showModal, setCloseModal, setOpenModal }) {
 
   return (
     <div className={styles.app}>
-      <Modal show={showModal} closeModal={() => setCloseModal()} />
+      <Modal show={showModal} closeModal={setCloseModal} />
       {calendars}
     </div>
   );

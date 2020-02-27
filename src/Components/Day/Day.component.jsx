@@ -40,7 +40,7 @@ const Day = ({ dayNumber, currentMonth, openModal, hasNotes }) => {
           ? styles.today
           : null
       }`}
-      onClick={e => {
+      onClick={() => {
         openModal(dayNumber, currentMonth);
       }}
     >

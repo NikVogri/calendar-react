@@ -88,19 +88,19 @@ const Modal = ({
         show ? classes.showModal : classes.hideModal
       }`}
     >
-      <ModalClose closeModal={() => setCloseModal()} />
+      <ModalClose closeModal={setCloseModal} />
       <ModalDate day={date[0]} month={date[1]} />
       <ModalNotesList
         date={date}
-        showNotes={() => displayNotes()}
+        showNotes={displayNotes}
         removeNote={removeNote}
       />
-
-      <div className={classes.addItems}>
+      {displayNotes().length < 5 && (
+        <div className={classes.addItems}>
         <span
           className={classes.addEventButton}
           title="Add an event"
-          onClick={() => addNotesToMonth()}
+          onClick={addNotesToMonth}
         >
           +
         </span>
@@ -110,6 +110,7 @@ const Modal = ({
           value={input}
         />
       </div>
+      ) }
 
       {error ? <ModalError error={error} closeError={removeError} /> : null}
       <ModalListLength length={displayNotes().length} />
