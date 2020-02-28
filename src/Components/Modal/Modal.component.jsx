@@ -42,46 +42,55 @@ const Modal = ({
       setError("Note can't be empty");
     }
   };
-
+  const checkInputValidity = () => {
+// checks if theres more than one note already in state
+if (input === "") {
+  setErrorMessage("empty");
+  return;
+} else {
+  removeError();
+}
+if (notes[month].length >= 1) {
+  if (
+    !notes[month].filter(el => el.note === input && el.day === day).length >
+    0
+  ) {
+    // not a duplicate
+    removeError();
+    setNotes(day, month, input);
+    setInput("");
+  } else {
+    // then its a duplicate
+    setErrorMessage("duplicate");
+  }
+} else {
+  // this is for adding the first item to an empty array
+  setNotes(day, month, input);
+  setInput("");
+}
+};
+// this variable is for the counter - to display number of notes & check if it's over 5.
+const displayNotes = () => {
+if (month) {
+  const allNotes = notes;
+  const currentMonthNotes = allNotes[month];
+  // loops over month notes arr and returns arr with all days that contain notes
+  const notesArr = currentMonthNotes.filter(note => note.day === day);
+  return notesArr;
+} else {
+  return 0;
+}
+  }
+  // in case + sign is pressed add note to list
   const addNotesToMonth = () => {
-    // checks if theres more than one note already in state
-    if (input === "") {
-      setErrorMessage("empty");
-      return;
-    } else {
-      removeError();
-    }
-    if (notes[month].length >= 1) {
-      if (
-        !notes[month].filter(el => el.note === input && el.day === day).length >
-        0
-      ) {
-        // not a duplicate
-        removeError();
-        setNotes(day, month, input);
-        setInput("");
-      } else {
-        // then its a duplicate
-        setErrorMessage("duplicate");
-      }
-    } else {
-      // this is for adding the first item to an empty array
-      setNotes(day, month, input);
-      setInput("");
-    }
+    return checkInputValidity();
   };
-  // this variable is for the counter - to display number of notes & check if it's over 5.
-  const displayNotes = () => {
-    if (month) {
-      const allNotes = notes;
-      const currentMonthNotes = allNotes[month];
-      // loops over month notes arr and returns arr with all days that contain notes
-      const notesArr = currentMonthNotes.filter(note => note.day === day);
-      return notesArr;
-    } else {
-      return 0;
+// in case enter key is pressed add note to list
+  const addNoteWithKey = event => {
+    if (event.key === 'Enter') {
+        return checkInputValidity();
     }
-  };
+  }
   return (
     <div
       className={`${classes.modal} ${
@@ -96,7 +105,8 @@ const Modal = ({
         removeNote={removeNote}
       />
       {displayNotes().length < 5 && (
-        <div className={classes.addItems}>
+        <div className={classes.addItems}
+        onKeyPress={addNoteWithKey}>
         <span
           className={classes.addEventButton}
           title="Add an event"
