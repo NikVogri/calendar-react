@@ -5,7 +5,7 @@ const ModalNoteList = ({ date, showNotes, removeNote }) => {
   const list = showNotes();
   if (list) {
     return (
-      <ul className={classes.listEvents}>
+      <ul className={classes.listItems}>
         {list.map((item, index) => (
           <li key={index}>
             <span

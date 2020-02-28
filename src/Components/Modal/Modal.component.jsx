@@ -116,7 +116,7 @@ if (month) {
         </span>
         <input
           onChange={e => setInput(e.target.value)}
-          maxLength="65"
+          maxLength="26"
           value={input}
         />
       </div>
